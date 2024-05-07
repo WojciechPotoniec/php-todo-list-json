@@ -1,0 +1,14 @@
+header{
+    background-color: rgb(40, 41, 43);
+    display: flex;
+    justify-content: space-between;
+}
+.logo{
+    height: 50px;
+}
+.logo img{
+    height: 100%;
+}
+.pointer{
+    cursor: pointer;
+}
