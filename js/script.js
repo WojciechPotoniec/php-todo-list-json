@@ -54,6 +54,13 @@ createApp({
       newObj.id = nextId + 1;
       this.todo.push(newObj);
       this.itemText = "";
+      const data = new FormData();
+      data.append('id', newObj.id);
+      data.append('text', newObj.text);
+      data.append('done', newObj.done);
+      axios.post(this.apiUrl, data).then((res) => {
+        console.log(res.data);
+      })
     },
   },
   computed: {
