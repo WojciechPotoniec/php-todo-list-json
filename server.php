@@ -1,6 +1,7 @@
 <?php
 
-$todoJson = file_get_contents("data.json");
+$todoJson = file_get_contents("js/data.json");
+
 
 if(isset($_POST["id"])){
     $list = json_decode($todoJson,true);
