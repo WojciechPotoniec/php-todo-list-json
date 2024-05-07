@@ -1,18 +1,28 @@
-import { todo } from "./data.js";
-
-// console.log(todo);
-
 const { createApp } = Vue;
 
 createApp({
   data() {
     return {
-      todo,
+      todo: [],
       itemText: "",
       done: "",
+      apiUrl: "js/data.json",
     };
   },
   methods: {
+    getData() {
+      axios
+        .get(this.apiUrl)
+        .then((res) => {
+          this.todo = res.data;
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        }).finally(() => {
+          
+        });
+    },
     toggleDone(id) {
       const item = this.todo.find((el) => {
         return el.id === id;
@@ -61,5 +71,7 @@ createApp({
       });
     },
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
 }).mount("#app");
