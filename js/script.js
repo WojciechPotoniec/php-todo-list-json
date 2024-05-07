@@ -6,7 +6,7 @@ createApp({
       todo: [],
       itemText: "",
       done: "",
-      apiUrl: "js/data.json",
+      apiUrl: "server.php",
     };
   },
   methods: {
@@ -19,9 +19,8 @@ createApp({
         })
         .catch((err) => {
           console.log(err);
-        }).finally(() => {
-          
-        });
+        })
+        .finally(() => {});
     },
     toggleDone(id) {
       const item = this.todo.find((el) => {
@@ -37,7 +36,14 @@ createApp({
       const i = this.todo.findIndex((el) => el.id === id);
       if (i !== -1) {
         this.todo.splice(i, 1);
-      }
+      };
+      const data = {
+        id: index
+      };
+      axios.delete(this.apiUrl, { data }).then((res) => {
+        console.log(res.data);
+        this.todo = res.data;
+      });
     },
     addItem() {
       const newObj = {
@@ -55,12 +61,12 @@ createApp({
       this.todo.push(newObj);
       this.itemText = "";
       const data = new FormData();
-      data.append('id', newObj.id);
-      data.append('text', newObj.text);
-      data.append('done', newObj.done);
+      data.append("id", newObj.id);
+      data.append("text", newObj.text);
+      data.append("done", newObj.done);
       axios.post(this.apiUrl, data).then((res) => {
-        console.log(res.data);
-      })
+        this.todo = res.data;
+      });
     },
   },
   computed: {
@@ -78,7 +84,7 @@ createApp({
       });
     },
   },
-  mounted() {
+  created() {
     this.getData();
   },
 }).mount("#app");
